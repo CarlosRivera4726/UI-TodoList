@@ -44,7 +44,7 @@ export const GET_TODO_LIST = gql`query GetTodos {
     }
 }`;
 
-export const INSER_TODO = gql`mutation InsertTodo {
+export const INSERT_TODO = gql`mutation InsertTodo {
   insert_Todos_one(
     object: {
         title: "testing",
@@ -66,6 +66,15 @@ export const UPDATE_TODO_BY_ID = gql`mutation UpdateTodoById($id: uuid!, $descri
 export const LOGIN_QUERY = gql`query LoginQuery($_eq: String = "carlos123", $_eq1: String = "1") {
   Users(where: {username: {_eq: $_eq}, _and: {password: {_eq: $_eq1}}}) {
     id
+    username
+    fullname
+    email
+  }
+}
+`;
+
+export const REGISTER_USER = `mutation RegisterUser($email: String!, $fullname: String!, $password: String!, $username: String!) {
+  insert_Users_one(object: {email: $email, fullname: $fullname, password: $password, username: $username}, on_conflict: {constraint: Users_username_key}){
     username
     fullname
     email
