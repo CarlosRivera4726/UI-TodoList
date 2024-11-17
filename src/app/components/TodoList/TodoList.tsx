@@ -6,7 +6,7 @@ import { Remove } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import ITodo from "@/app/interfaces/ITodo";
 import { GET_TODO_LIST } from "@/app/interfaces/const";
-const user = "CARLOS RIVERA"
+const user = localStorage.getItem('fullname')
 
 const TodoList = () => {
     const router = useRouter()
