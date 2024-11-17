@@ -24,15 +24,15 @@ export const STATUS = [
 
 ]
 
-export const GET_TODO_LIST_BY_ID = gql`
-  query GET_TODO_LIST_BY_ID($id: uuid!) {
-    Todos(where: {id: {_eq: $id}}) {
-      id
-      title
-      description
-      status
-    }
+export const GET_TODO_LIST_BY_ID = `
+  query GET_TODO_LIST_BY_ID($_eq: uuid!) {
+  Todos(where: {UserID: {_eq: $_eq}}) {
+    id
+    title
+    description
+    status
   }
+}
 `;
 
 export const GET_TODO_LIST = gql`query GetTodos {

@@ -55,7 +55,7 @@ const LoginView = () => {
             localStorage.setItem('email', user.email);
         })
 
-        router.replace('/pages/todo');
+        router.push('/pages/todo');
 
     }
 
