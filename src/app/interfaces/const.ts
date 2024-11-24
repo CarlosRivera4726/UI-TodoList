@@ -1,5 +1,10 @@
 import { gql } from "@apollo/client";
 
+export const HEADERS = {
+  "Content-Type": "application/json",
+  "x-hasura-admin-secret": "StpgVF86YjCS77ZxCF3sYKTtzdc2kRDLdLu6PxpNprZgMgdAWDppWqURPJDC7agc",
+}
+
 export const STATUS = [
     {
         value: "PENDING",
@@ -24,9 +29,20 @@ export const STATUS = [
 
 ]
 
-export const GET_TODO_LIST_BY_ID = `
+export const GET_TODO_LIST_BY_USERID = `
   query GET_TODO_LIST_BY_ID($_eq: uuid!) {
   Todos(where: {UserID: {_eq: $_eq}}) {
+    id
+    title
+    description
+    status
+  }
+}
+`;
+
+export const GET_TODO_LIST_BY_ID_ = gql`
+  query GET_TODO_LIST_BY_ID($_eq: uuid!) {
+  Todos(where: {id: {_eq: $_eq}}) {
     id
     title
     description
@@ -63,11 +79,20 @@ export const UPDATE_TODO_BY_ID = gql`mutation UpdateTodoById($id: uuid!, $descri
 }
 `;
 
-export const LOGIN_QUERY = gql`query LoginQuery($_eq: String = "carlos123", $_eq1: String = "1") {
-  Users(where: {username: {_eq: $_eq}, _and: {password: {_eq: $_eq1}}}) {
+export const LOGIN_QUERY = gql`query LoginQuery($_eq: String!) {
+  Users(where: {username: {_eq: $_eq} }) {
     id
     username
     fullname
+    email
+    password
+  }
+}
+`;
+
+export const GET_USER_INFO = `query GetUserInfo($_eq: String!) {
+  Users(where: {email: {_eq: $_eq} }) {
+    id
     email
   }
 }

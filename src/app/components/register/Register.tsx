@@ -1,5 +1,5 @@
 "use client"
-import { REGISTER_USER } from '@/app/interfaces/const';
+import { HEADERS, REGISTER_USER } from '@/app/interfaces/const';
 import { IUser } from '@/app/interfaces/IUser';
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -9,7 +9,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import { VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
 import { useState } from 'react';
-
+import bcrypt from 'bcryptjs';
 
 const RegisterView = () => {
     // CONTROL DE VISUALIZACION DE CONTRASEÑA
@@ -41,6 +41,7 @@ const RegisterView = () => {
    
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
         const isValid = validateInputUsername() && validateInputFullname() && validateInputEmail() && validateInputPassword() && validateInputRepeatPassword();
         if (!isValid) {
             alert('Debe completar todos los campos');
@@ -54,17 +55,11 @@ const RegisterView = () => {
 
         const newUser: IUser = {
             username: username,
-            password: password,
+            password: await bcrypt.hash(password, 10),
             email: email,
             fullname: fullname
         }
 
-        e.preventDefault();
-
-        console.log(typeof newUser.username);
-        console.log(typeof newUser.password);
-        console.log(typeof newUser.email);
-        console.log(typeof newUser.fullname);
 
         const {data} = await axios.post('https://stirred-ladybird-74.hasura.app/v1/graphql', 
             {
@@ -77,13 +72,14 @@ const RegisterView = () => {
                 }
             }, 
             {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-hasura-admin-secret': 'StpgVF86YjCS77ZxCF3sYKTtzdc2kRDLdLu6PxpNprZgMgdAWDppWqURPJDC7agc'
-                }
+                headers:HEADERS
             });
 
-        console.log(data);
+        console.log("data from register: ", data);
+        if(data) {
+            router.push("/auth/login") 
+        }
+        router.refresh()
     
 
     }
@@ -95,7 +91,7 @@ const RegisterView = () => {
 
     return (
         <div className='flex flex-col text-center text-3xl gap-24'>
-            <h1>Register</h1>
+            <h1 className='uppercase text-4xl font-bold'>Register</h1>
             <Box
                 component="form"
                 sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
@@ -186,7 +182,7 @@ const RegisterView = () => {
 
                 </div>
                 <div className=' flex justify-center gap-3'>
-                    <Button variant="contained" onClick={handleSubmit}>Registrarse</Button>
+                    <button className="px-4 py-2 bg-gradient-to-r from-purple-500 to-blue-600 text-white font-semibold rounded-lg shadow-lg hover:from-purple-600 hover:to-blue-700 transition-transform transform" onClick={handleSubmit}>Registrarse</button>
 
                     <Button variant="outlined" onClick={handleBack}>Volver</Button>
                 </div>

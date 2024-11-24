@@ -1,5 +1,5 @@
 "use client"
-import { GET_TODO_LIST_BY_ID, STATUS } from "@/app/interfaces/const"
+import { GET_TODO_LIST_BY_ID_, STATUS } from "@/app/interfaces/const"
 import { useQuery } from "@apollo/client"
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
 import { useEffect, useState } from "react"
@@ -10,8 +10,8 @@ interface IdProps {
 
 const EditTodo = ({ id }: IdProps) => {
     
-    const { loading, error, data } = useQuery(GET_TODO_LIST_BY_ID, {
-        variables: { id },
+    const { loading, error, data } = useQuery(GET_TODO_LIST_BY_ID_, {
+        variables: { _eq: id },
     });
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")

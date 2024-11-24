@@ -23,6 +23,6 @@
       "@components/*": ["./src/app/components/*"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/pages/todo/page.tsz"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/pages/todo/page.tsz", "src/middleware.ts"],
   "exclude": ["node_modules"]
 }

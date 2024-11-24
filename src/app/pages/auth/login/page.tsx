@@ -6,10 +6,9 @@ import { ApolloProvider } from "@apollo/client";
 const LoginPage = () => {
     return (
         <div>
-            <h1>Login Page</h1>
-            <ApolloProvider client={client}>
-            <LoginView />
-            </ApolloProvider>
+                <ApolloProvider client={client}>
+                    <LoginView />
+                </ApolloProvider>
         </div>
     );
 }
