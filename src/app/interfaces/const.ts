@@ -6,26 +6,30 @@ export const HEADERS = {
 }
 
 export const STATUS = [
-    {
-        value: "PENDING",
-        label: "Pendiente"
-    },
-    {
-        value: "COMPLETED",
-        label: "Completado"
-    },
-    {
-        value: "IN_PROGRESS",
-        label: "En progreso"
-    },
-    {
-        value: "ACTIVE",
-        label: "Activo"
-    },
-    {
-        value: "INACTIVE",
-        label: "Inactivo"
-    },
+  {
+    value: "SELECT ONE STATUS",
+    label: "Seleccionar un estado"
+  },
+  {
+    value: "PENDING",
+    label: "Pendiente"
+  },
+  {
+    value: "COMPLETED",
+    label: "Completado"
+  },
+  {
+    value: "IN_PROGRESS",
+    label: "En progreso"
+  },
+  {
+    value: "ACTIVE",
+    label: "Activo"
+  },
+  {
+    value: "INACTIVE",
+    label: "Inactivo"
+  },
 
 ]
 
@@ -60,24 +64,43 @@ export const GET_TODO_LIST = gql`query GetTodos {
     }
 }`;
 
-export const INSERT_TODO = gql`mutation InsertTodo {
+export const INSERT_TODO = gql`
+mutation MyMutation(
+  $UserID: uuid!,
+  $description: String!,
+  $status: String!,
+  $title: String!
+) {
   insert_Todos_one(
     object: {
-        title: "testing",
-        status: "ACTIVE",
-        description: "PROBANDO INSERT",
-        UserID: ""
-        })}
-`;
-
-export const UPDATE_TODO_BY_ID = gql`mutation UpdateTodoById($id: uuid!, $description: String!, $status: String!, $title: String!) {
-  update_Todos_by_pk(pk_columns: {id: $id}, _set: {status: $status, title: $title, description: $description}) {
-    description
+      description: $description,
+      status: $status,
+      title: $title,
+      UserID: $UserID
+    }
+  ) {
+    id
     status
     title
+    description
+    UserID
   }
 }
 `;
+
+export const UPDATE_TODO_BY_ID = gql`
+  mutation UpdateTodoById($id: uuid!, $description: String!, $status: String!, $title: String!) {
+    update_Todos_by_pk(
+      pk_columns: { id: $id }
+      _set: { status: $status, title: $title, description: $description }
+    ) {
+      description
+      status
+      title
+    }
+  }
+`;
+
 
 export const LOGIN_QUERY = gql`query LoginQuery($_eq: String!) {
   Users(where: {username: {_eq: $_eq} }) {
@@ -104,5 +127,10 @@ export const REGISTER_USER = `mutation RegisterUser($email: String!, $fullname: 
     fullname
     email
   }
+}
+`;
+
+export const DELETE_TODO_BY_ID = `mutation DELETE_TODO_BY_ID($id: uuid!) {
+  delete_Todos_by_pk(id: $id){ id title status }
 }
 `;

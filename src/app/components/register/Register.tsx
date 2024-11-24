@@ -77,7 +77,7 @@ const RegisterView = () => {
 
         console.log("data from register: ", data);
         if(data) {
-            router.push("/auth/login") 
+            router.push("/pages/auth/login") 
         }
         router.refresh()
     
@@ -85,7 +85,7 @@ const RegisterView = () => {
     }
 
     const handleBack = () => {
-        router.replace('/pages/login');
+        router.replace('/pages/auth/login');
     }
 
 
@@ -182,7 +182,7 @@ const RegisterView = () => {
 
                 </div>
                 <div className=' flex justify-center gap-3'>
-                    <button className="px-4 py-2 bg-gradient-to-r from-purple-500 to-blue-600 text-white font-semibold rounded-lg shadow-lg hover:from-purple-600 hover:to-blue-700 transition-transform transform" onClick={handleSubmit}>Registrarse</button>
+                    <button className="px-4 py-2 bg-gradient-to-r from-purple-500 to-blue-600 text-white text-lg rounded-lg shadow-lg hover:from-purple-600 hover:to-blue-700 transition-transform transform" onClick={handleSubmit}>Registrarse</button>
 
                     <Button variant="outlined" onClick={handleBack}>Volver</Button>
                 </div>

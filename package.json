@@ -21,10 +21,11 @@
     "bcrypt-ts": "^5.0.3",
     "bcryptjs": "^2.4.3",
     "graphql": "15.9.0",
+    "localstorage-polyfill": "^1.0.1",
     "next": "15.0.3",
     "next-auth": "^4.24.10",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.2",
     "styled-components": "^6.1.13"
   },

@@ -1,46 +1,98 @@
 "use client"
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { Remove } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import ITodo from "@/app/interfaces/ITodo";
-import { GET_TODO_LIST_BY_USERID } from "@/app/interfaces/const";
-import axios from "axios";
 import { useState } from "react";
-import { getServerSession } from "next-auth";
+import TodoListModal from "./TodoListModal";
+import { ApolloProvider } from "@apollo/client";
+import client from "@/db/conexion";
+import EditTodoModal from "./EditTodoModal";
+import { DELETE_TODO_BY_ID, HEADERS } from "@/app/interfaces/const";
+import axios from "axios";
 
 interface TodoListProps {
     todos: ITodo[];
     userId: string | null | undefined;
     userName: string | null | undefined;
-  }
-  
+}
 
-const TodoList: React.FC<TodoListProps> = ({todos, userId, userName}) => {
+
+const TodoList: React.FC<TodoListProps> = ({ todos, userId, userName }) => {
+    localStorage.setItem('userId', userId || '');
     const router = useRouter()
     const [loading, setLoading] = useState<boolean>(true);
+    const [openTodoAdd, setOpenTodoAdd] = useState<boolean>(false);
+    const [openTodoEdit, setOpenTodoEdit] = useState<boolean>(false);
+    const [selectedTodoId, setSelectedTodoId] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     const handleTodoListEdit = (id: string) => {
-        console.log("Editando el todo con ID: ", id)
-        router.replace(`/pages/todo/${id}`)
+        setSelectedTodoId(id)
+        setOpenTodoEdit(true)
     }
 
-    const handleTodoListDelete = (id: string) => {
-        console.log("Eliminado el todo con ID: ", id)
-        router.replace(`/pages/todo/${id}`)
-    }
-    const handleTodoListView = (id: string) => {
-        console.log("Mirando el todo con ID: ", id)
-        router.replace(`/pages/todo/${id}`)
+    const handleCloseTodoEdit = () => {
+        setSelectedTodoId(null)
+        setOpenTodoEdit(false)
     }
 
-   
+    const handleTodoListDelete = async (id: string) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this task?");
+        const parsedId = String(id);
+        if (confirmDelete) {
+          try {
+            // Hacer la solicitud de eliminación con axios
+            console.log({
+                query: DELETE_TODO_BY_ID,
+                variables: { id },
+              });
+            const { data } = await axios.post(
+              "https://stirred-ladybird-74.hasura.app/v1/graphql",
+              {
+                query: DELETE_TODO_BY_ID,
+                variables: { id: parsedId }, 
+              },
+              {
+                headers: HEADERS,
+              }
+            );
+      
+            // Confirmar en la consola y al usuario
+            console.log("Deleted task:", data);
+            alert("Task deleted successfully!");
+      
+            // Refrescar la lista (o redirigir)
+            router.refresh();
+          } catch (err) {
+            console.error("Error deleting task:", err);
+            alert("Failed to delete task.");
+          }
+        }
+      };
+
+    const handleTodoListAdd = () => {
+        console.log("Agregando un nuevo todo");
+        setOpenTodoAdd(true);
+    };
+
+    const handleCloseTodoAdd = () => {
+        setOpenTodoAdd(false);
+    };
+
+
     return (
 
         <section className="m-32">
             <h2 className="text-2xl text-center text-black font-semibold mb-8">TODO LIST - USER: {userName}</h2>
+
+            <section>
+                <button className="bg-blue-600 rounded p-3 text-white uppercase mb-3 font-bold" onClick={handleTodoListAdd}>AGREGAR TAREA</button>
+                <ApolloProvider client={client}>
+                    <TodoListModal open={openTodoAdd} onClose={handleCloseTodoAdd} />
+                </ApolloProvider>
+            </section>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead className="">
@@ -64,9 +116,13 @@ const TodoList: React.FC<TodoListProps> = ({todos, userId, userName}) => {
                                 <TableCell align="right">{todo.status}</TableCell>
                                 <TableCell align="right">
                                     <section className="flex flex-row gap-7 justify-center">
-                                        <button className="text-center text-blue-700" onClick={() => handleTodoListEdit(todo.id)}> <EditIcon /> Edit </button>
+                                        <div>
+                                            <button className="text-center text-blue-700" onClick={() => handleTodoListEdit(todo.id)}> <EditIcon /> Edit </button>
+                                            <ApolloProvider client={client}>
+                                                <EditTodoModal open={openTodoEdit} onClose={handleCloseTodoEdit} id={selectedTodoId} />
+                                            </ApolloProvider>
+                                        </div>
                                         <button className="text-center text-red-700" onClick={() => handleTodoListDelete(todo.id)}> <Remove /> Remove </button>
-                                        <button className="text-center text-green-700" onClick={() => handleTodoListView(todo.id)}> <RemoveRedEyeIcon /> View </button>
                                     </section>
                                 </TableCell>
                             </TableRow>
