@@ -1,5 +1,5 @@
 "use client"
-import { HEADERS, REGISTER_USER } from '@/app/interfaces/const';
+import { HEADERS, REGISTER_USER } from '@/app/constants/const';
 import { IUser } from '@/app/interfaces/IUser';
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 import Box from '@mui/material/Box';

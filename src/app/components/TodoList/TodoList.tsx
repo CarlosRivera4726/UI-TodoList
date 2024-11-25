@@ -9,7 +9,7 @@ import TodoListModal from "./TodoListModal";
 import { ApolloProvider } from "@apollo/client";
 import client from "@/db/conexion";
 import EditTodoModal from "./EditTodoModal";
-import { DELETE_TODO_BY_ID, HEADERS } from "@/app/interfaces/const";
+import { DELETE_TODO_BY_ID, HEADERS } from "@/app/constants/const";
 import axios from "axios";
 
 interface TodoListProps {

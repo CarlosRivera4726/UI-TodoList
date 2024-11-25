@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import axios from "axios";
 import TodoList from "@components/TodoList/TodoList";
-import { GET_TODO_LIST_BY_USERID, GET_USER_INFO, HEADERS } from "@/app/interfaces/const";
+import { GET_TODO_LIST_BY_USERID, GET_USER_INFO, HEADERS } from "@/app/constants/const";
 
 export default async function TodoListViewServer() {
   // Obtén la sesión del usuario

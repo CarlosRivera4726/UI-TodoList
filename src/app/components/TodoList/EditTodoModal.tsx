@@ -1,6 +1,6 @@
 "use client";
 
-import { GET_TODO_LIST_BY_ID_, STATUS, UPDATE_TODO_BY_ID } from "@/app/interfaces/const";
+import { GET_TODO_LIST_BY_ID_, STATUS, UPDATE_TODO_BY_ID } from "@/app/constants/const";
 import { useMutation, useQuery } from "@apollo/client";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";

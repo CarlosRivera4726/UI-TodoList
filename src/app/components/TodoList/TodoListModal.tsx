@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import { INSERT_TODO, STATUS } from "@/app/interfaces/const";
+import { INSERT_TODO, STATUS } from "@/app/constants/const";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";

@@ -1,4 +1,4 @@
-import { LOGIN_QUERY } from '@/app/interfaces/const';
+import { LOGIN_QUERY } from '@/app/constants/const';
 import client from '@/db/conexion';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';

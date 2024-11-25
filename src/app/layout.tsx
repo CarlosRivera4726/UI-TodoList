@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ResponsiveAppBar from "./components/navbar/Navbar";
-import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Todo List",
