@@ -67,6 +67,11 @@ const LoginView = () => {
                 >
                     {/* Username Input */}
                     <div className="mb-4">
+                        {errors.username && (
+                            <span className="text-sm text-red-600 mt-1 block">
+                                Este campo es requerido
+                            </span>
+                        )}
                         <TextField
                             id="username"
                             label="Username"
@@ -74,16 +79,17 @@ const LoginView = () => {
                             {...register('username', { required: true })}
                             onChange={(e) => setUsername(e.target.value)}
                         />
-                        {errors.username && (
-                            <span className="text-sm text-red-600 mt-1 block">
-                                Este campo es requerido
-                            </span>
-                        )}
+
                     </div>
 
                     {/* Password Input */}
                     <div className="mb-6">
                         <FormControl sx={{ width: '100%' }} variant="outlined">
+                            {errors.password && (
+                                <span className="text-sm text-red-600 mt-1 block">
+                                    Este campo es requerido
+                                </span>
+                            )}
                             <InputLabel htmlFor="password">Password</InputLabel>
                             <OutlinedInput
                                 id="password"
@@ -99,6 +105,7 @@ const LoginView = () => {
                                             }
                                             onClick={handleClickShowPassword}
                                             onMouseDown={handleMouseDownPassword}
+                                            onMouseUp={handleMouseUpPassword}
                                             edge="end"
                                         >
                                             {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -107,11 +114,7 @@ const LoginView = () => {
                                 }
                             />
                         </FormControl>
-                        {errors.password && (
-                            <span className="text-sm text-red-600 mt-1 block">
-                                Este campo es requerido
-                            </span>
-                        )}
+
                     </div>
 
                     {/* Buttons */}

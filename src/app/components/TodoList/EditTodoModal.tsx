@@ -18,9 +18,6 @@ interface EditTodoProps {
 }
 
 const EditTodoModal = ({ id, open, onClose }: EditTodoProps) => {
-    if (id === null) {
-        return;
-    }
     // Apollo Query
     const { loading, error, data } = useQuery(GET_TODO_LIST_BY_ID_, {
         variables: { _eq: id },
@@ -65,7 +62,7 @@ const EditTodoModal = ({ id, open, onClose }: EditTodoProps) => {
 
     // Loading and Error States
     if (loading) return;
-    if (error) return <p>Error: {error.message}</p>;
+    if (error) return;
 
     return (
         <>
