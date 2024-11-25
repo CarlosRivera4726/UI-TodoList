@@ -96,7 +96,7 @@ const TodoList: React.FC<TodoListProps> = ({ todos, userId, userName }) => {
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead className="">
-                        <TableRow>
+                        <TableRow className="bg-gray-800">
                             <TableCell className="font-bold text-sm uppercase text-white">Titulo</TableCell>
                             <TableCell align="right" className="font-bold text-sm uppercase text-center text-white">Descripcion</TableCell>
                             <TableCell align="right" className="font-bold text-sm uppercase text-white">Estado</TableCell>

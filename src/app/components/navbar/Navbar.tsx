@@ -1,13 +1,11 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
+import UserMenu from "./userMenu";
 
 
 async function ResponsiveAppBar() {
   const session = await getServerSession(authOptions);
-
-  console.log(session)
-
   return (
     <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,25 +30,27 @@ async function ResponsiveAppBar() {
               </div>
             </>) : (
             <>
-              <div className="hidden md:flex space-x-6">
-                <a
-                  href="/"
-                  className="hover:text-gray-200 transition-colors duration-300"
-                >
-                  Inicio
-                </a>
-                <Link
-                  href="/pages/todo"
-                  className="hover:text-gray-200 transition-colors duration-300"
-                >
-                  Tareas
-                </Link>
-                <Link
-                  href="/api/auth/signout"
-                  className="hover:text-gray-200 transition-colors duration-300"
-                >
-                  Cerrar Sesión
-                </Link>
+              <div className="flex flex-row justify-center items-center md:flex space-x-6">
+                  <Link
+                    href="/"
+                    className="hover:text-gray-200 transition-colors duration-300"
+                  >
+                    Inicio
+                  </Link>
+                  <Link
+                    href="/pages/todo"
+                    className="hover:text-gray-200 transition-colors duration-300"
+                  >
+                    Tareas
+                  </Link>
+                  <Link
+                    href="/pages/gallery"
+                    className="hover:text-gray-200 transition-colors duration-300"
+                  >
+                    Galeria
+                  </Link>
+
+                  <UserMenu />
               </div>
             </>
           )

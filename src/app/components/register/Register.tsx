@@ -37,15 +37,15 @@ const RegisterView = () => {
     const validateInputEmail = () => { return email === "" ? false : true; }
     const validateInputPassword = () => { return password === "" ? false : true; }
     const validateInputConfirmPassword = () => { return confirmPassword === "" ? false : true; }
-    
+
     const [error, setError] = useState<string | null | undefined>(null);
 
 
 
 
     const onSubmit = handleSubmit(async data => {
-        if(validateInputPassword() || validateInputConfirmPassword()) {
-            if(password !== confirmPassword) {
+        if (validateInputPassword() || validateInputConfirmPassword()) {
+            if (password !== confirmPassword) {
                 setError("Las contraseñas no coinciden")
                 return;
             }
@@ -135,7 +135,7 @@ const RegisterView = () => {
                         </span>
                     )}
                     <TextField
-                        error={!validateInputEmail()}
+                        className={errors.email ? 'border-red-600' : ''}
                         id="email"
                         label="Email"
                         {...register('email', { required: true })}
@@ -143,12 +143,12 @@ const RegisterView = () => {
                     />
                 </div>
                 <div>
+                    {errors.password && (
+                        <span className="text-sm text-red-600 mt-1 block">
+                            Este campo es requerido
+                        </span>
+                    )}
                     <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                        {errors.password && (
-                            <span className="text-sm text-red-600 mt-1 block">
-                                Este campo es requerido
-                            </span>
-                        )}
                         <InputLabel htmlFor="password">Password</InputLabel>
                         <OutlinedInput
                             id="password"
@@ -176,12 +176,12 @@ const RegisterView = () => {
 
                 </div>
                 <div>
+                    {errors.password && (
+                        <span className="text-sm text-red-600 mt-1 block">
+                            Este campo es requerido
+                        </span>
+                    )}
                     <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                        {errors.password && (
-                            <span className="text-sm text-red-600 mt-1 block">
-                                Este campo es requerido
-                            </span>
-                        )}
                         <InputLabel htmlFor="confirmPassword">Repeat Password</InputLabel>
                         <OutlinedInput
                             id="confirmPassword"
