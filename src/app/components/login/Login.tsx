@@ -38,7 +38,7 @@ const LoginView = () => {
         if (res?.error || !res?.ok) {
             setError(res?.error)
         } else {
-            router.push('/pages/todo')
+            router.push('/')
             router.refresh()
         }
     })
@@ -84,12 +84,12 @@ const LoginView = () => {
 
                     {/* Password Input */}
                     <div className="mb-6">
+                        {errors.password && (
+                            <span className="text-sm text-red-600 mt-1 block">
+                                Este campo es requerido
+                            </span>
+                        )}
                         <FormControl sx={{ width: '100%' }} variant="outlined">
-                            {errors.password && (
-                                <span className="text-sm text-red-600 mt-1 block">
-                                    Este campo es requerido
-                                </span>
-                            )}
                             <InputLabel htmlFor="password">Password</InputLabel>
                             <OutlinedInput
                                 id="password"

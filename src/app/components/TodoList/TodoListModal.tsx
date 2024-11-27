@@ -36,7 +36,6 @@ export default function TodoListModal({ open, onClose }: TransitionsModalProps) 
   const [error, setError] = React.useState<string | null | undefined>(null);
   const router = useRouter();
 
-  // Mover el hook useMutation al nivel superior del componente
   const [addTodo, { loading }] = useMutation(INSERT_TODO);
 
   const onSubmit = handleSubmit(async (todoData) => {
