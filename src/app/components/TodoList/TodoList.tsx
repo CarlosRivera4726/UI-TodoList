@@ -67,6 +67,7 @@ const TodoList: React.FC<TodoListProps> = ({ todos, userId, userName }) => {
             router.refresh();
           } catch (err) {
             console.error("Error deleting task:", err);
+            setError((err as Error).message);
             alert("Failed to delete task.");
           }
         }
@@ -94,13 +95,13 @@ const TodoList: React.FC<TodoListProps> = ({ todos, userId, userName }) => {
                 </ApolloProvider>
             </section>
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead className="">
-                        <TableRow className="bg-gray-800">
-                            <TableCell className="font-bold text-sm uppercase text-white">Titulo</TableCell>
-                            <TableCell align="right" className="font-bold text-sm uppercase text-center text-white">Descripcion</TableCell>
-                            <TableCell align="right" className="font-bold text-sm uppercase text-white">Estado</TableCell>
-                            <TableCell align="center" className="font-bold text-sm uppercase text-white">Utilidades</TableCell>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table" className="text-white">
+                    <TableHead>
+                        <TableRow className="bg-gray-600">
+                            <TableCell align="left" className="text-sm uppercase text-white">Titulo</TableCell>
+                            <TableCell align="right" className="font-bold text-sm uppercase text-center">Descripcion</TableCell>
+                            <TableCell align="right" className="font-bold text-sm uppercase">Estado</TableCell>
+                            <TableCell align="center" className="font-bold text-sm uppercase">Utilidades</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
