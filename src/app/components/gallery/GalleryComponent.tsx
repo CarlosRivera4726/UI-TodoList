@@ -1,77 +1,43 @@
-"use client"
-import { Box, Tab, Tabs } from "@mui/material";
-import ImageIcon from '@mui/icons-material/Image';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { useState } from "react";
-import GalleryView from "./GalleryView";
-import { ApolloProvider } from "@apollo/client";
-import client from "@/db/conexion";
+import { GET_GALLERY } from "@/app/constants/const.gallery";
+import { useQuery } from "@apollo/client";
+import { Alert, CircularProgress, ImageList, ImageListItem } from "@mui/material";
 
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
+interface GalleryProps {
+    userId: string | null | undefined;
 }
 
-function CustomTabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
+const GalleryComponent = (props: GalleryProps) => {
+    // Aseguramos que la consulta solo se ejecute si userId es válido
+    const { loading, error, data } = useQuery(GET_GALLERY, {
+        variables: { _eq: props.userId },
+        skip: !props.userId, // Skip la consulta si no hay userId
+    });
+
+    if (loading) return <CircularProgress />;
+    if (error) return <Alert severity="error">Error: {error.message}</Alert>;
+
+    if (!data || !data.Gallery || data.Gallery.length === 0) {
+        return <Alert severity="info">No images found!</Alert>;
+    }
 
     return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-        </div>
+        <section className="mt-10">
+            <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+
+                {data.Gallery.map((image: any) => (
+                    <ImageListItem key={`${image.id}-${image.url}`}>
+
+                        <img
+                            srcSet={`${image.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                            src={`${image.url}?w=164&h=164&fit=crop&auto=format`}
+                            alt={image.name || "Gallery image"}
+                            style={{ width: '100%', height: 'auto', marginBottom: '10px' }}
+                        />
+                    </ImageListItem>
+                ))}
+            </ImageList>
+        </section>
     );
-}
-
-function a11yProps(index: number) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
-
-const GalleryComponent = () => {
-    const [value, setValue] = useState(0);
-
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-    };
-
-    return (
-        <>
-            <h1 className="text-black text-center font-bold uppercase mt-5 text-5xl mb-10">GALERIA</h1>
-
-            <section>
-                <Box sx={{ width: '100%' }}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }} className="flex flex-row items-center justify-center">
-                        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                            <Tab icon={<ImageIcon />} label="Imagenes" {...a11yProps(0)} />
-                            <Tab icon={<UploadFileIcon />} label="Upload" {...a11yProps(1)} />
-                        </Tabs>
-                    </Box>
-                    <section className="flex flex-row items-center justify-center">
-                        <CustomTabPanel value={value} index={0}>
-                            <ApolloProvider client={client}>
-                                <GalleryView userId={localStorage.getItem("userId")}/>
-                            </ApolloProvider>
-                        </CustomTabPanel>
-                        <CustomTabPanel value={value} index={1}>
-                            Item Two
-                        </CustomTabPanel>
-                    </section>
-                </Box>
-
-            </section>
-
-        </>
-    )
-}
-
+};
 
 export default GalleryComponent;

@@ -1,8 +1,8 @@
-import GalleryComponent from "@/app/components/gallery/GalleryComponent";
+import GalleryView from "@/app/components/gallery/GalleryView";
 
 const GalleryPage = () => {
     return (
-       <GalleryComponent />
+       <GalleryView />
     );
 }
 export default GalleryPage;
