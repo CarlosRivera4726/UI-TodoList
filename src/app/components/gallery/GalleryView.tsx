@@ -17,7 +17,7 @@ const GalleryView = (props: GalleryProps) => {
     if (error) return <Alert severity="error">Error: {error.message}</Alert>;
 
     if (!data || !data.Gallery || data.Gallery.length === 0) {
-        return <p>No images found.</p>;
+        return <Alert severity="info">No images found!</Alert>;
     }
 
     return (
