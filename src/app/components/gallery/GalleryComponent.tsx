@@ -10,6 +10,7 @@ const GalleryComponent = (props: GalleryProps) => {
     // Aseguramos que la consulta solo se ejecute si userId es válido
     const { loading, error, data } = useQuery(GET_GALLERY, {
         variables: { _eq: props.userId },
+        pollInterval: 100,
         skip: !props.userId, // Skip la consulta si no hay userId
     });
 
