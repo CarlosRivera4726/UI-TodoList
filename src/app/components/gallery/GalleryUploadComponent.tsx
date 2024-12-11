@@ -11,10 +11,6 @@ import { useState } from "react";
 import axios from "axios";
 
 const GalleryUpload = () => {
-    const [name, setName] = useState('');
-    const [url, setUrl] = useState('');
-    const router = useRouter();
-
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const [error, setError] = useState<string | null | undefined>(null);
     const [success, setSuccess] = useState<string | null | undefined>(null);
@@ -42,7 +38,6 @@ const GalleryUpload = () => {
             {
                 headers: HEADERS
             });
-            console.log(imageRegistered)
         if (imageRegistered.errors) {
             setError(imageRegistered.errors[0].message);
             return;

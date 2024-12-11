@@ -31,13 +31,8 @@ const RegisterView = () => {
     const router = useRouter();
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-
-    const validateInputUsername = () => { return username === "" ? false : true; }
-    const validateInputFullname = () => { return fullname === "" ? false : true; }
-    const validateInputEmail = () => { return email === "" ? false : true; }
     const validateInputPassword = () => { return password === "" ? false : true; }
     const validateInputConfirmPassword = () => { return confirmPassword === "" ? false : true; }
-
     const [error, setError] = useState<string | null | undefined>(null);
 
 

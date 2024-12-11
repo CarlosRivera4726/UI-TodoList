@@ -25,6 +25,9 @@ const UserMenu = () => {
         setAnchorElUser(null);
     };
 
+    const handleSignOut = () => {
+        localStorage.removeItem('userId');
+    }
     return (
         <div className="flex flex-row justify-center items-center">
             <Box sx={{ flexGrow: 0 }}>
@@ -64,6 +67,7 @@ const UserMenu = () => {
                     <MenuItem>
                         <Link
                             href="/api/auth/signout"
+                            onClick={handleSignOut}
                             className="hover:text-black transition-colors duration-300"
                         >
                             Cerrar Sesión

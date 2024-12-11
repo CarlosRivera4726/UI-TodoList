@@ -51,12 +51,11 @@ const EditTodoModal = ({ id, open, onClose }: EditTodoProps) => {
                     status,
                 },
             });
-
-            console.log("Actualización exitosa:", data);
             onClose(); // Cierra el modal después de la actualización
             router.refresh()
         } catch (err) {
             console.error("Error al actualizar:", err);
+            
         }
     };
 
